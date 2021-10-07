@@ -1,4 +1,5 @@
 service: namesorterprocessor
+app: namesorterprocessor
 provider: 
   name: aws
   region: eu-north-1

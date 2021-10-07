@@ -64,6 +64,30 @@
                       "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/NameSorterProcessor-dev*:*:*"
                     }
                   ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "ssm:GetParameterByPath",
+                    "ssm:GetParameters"
+                  ],
+                  "Resource": [
+                    "*"
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "dynamodb:*"
+                  ],
+                  "Resource": [
+                    {
+                      "Fn::GetAtt": [
+                        "namesTable",
+                        "Arn"
+                      ]
+                    }
+                  ]
                 }
               ]
             }
@@ -90,7 +114,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "eu-north-1-deployments",
-          "S3Key": "serverless/NameSorterProcessor/dev/1633633090609-2021-10-07T18:58:10.609Z/NameSorterProcessor.zip"
+          "S3Key": "serverless/NameSorterProcessor/dev/1633640478680-2021-10-07T21:01:18.680Z/namesorter.zip"
         },
         "Handler": "NameSorterProcessor::NameSorterProcessor.LambdaEntryPoint::FunctionHandlerAsync",
         "Runtime": "dotnetcore3.1",
@@ -112,16 +136,6 @@
       "DependsOn": [
         "NameSorterProcessorLogGroup"
       ]
-    },
-    "NameSorterProcessorLambdaVersion32xwkLfjCijHMbZeFzSIaRAEu1vJ6DIxtSxGrvVoY": {
-      "Type": "AWS::Lambda::Version",
-      "DeletionPolicy": "Retain",
-      "Properties": {
-        "FunctionName": {
-          "Ref": "NameSorterProcessorLambdaFunction"
-        },
-        "CodeSha256": "uUoOYlQgyTXRBR5hzNnQTPWD7b9WyMD1cnaz6bn426U="
-      }
     },
     "ApiGatewayRestApi": {
       "Type": "AWS::ApiGateway::RestApi",
@@ -196,7 +210,7 @@
         "NameSorterProcessorLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1633633088703": {
+    "ApiGatewayDeployment1633640476923": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
@@ -273,15 +287,6 @@
       "Value": "eu-north-1-deployments",
       "Export": {
         "Name": "sls-NameSorterProcessor-dev-ServerlessDeploymentBucketName"
-      }
-    },
-    "NameSorterProcessorLambdaFunctionQualifiedArn": {
-      "Description": "Current Lambda function version",
-      "Value": {
-        "Ref": "NameSorterProcessorLambdaVersion32xwkLfjCijHMbZeFzSIaRAEu1vJ6DIxtSxGrvVoY"
-      },
-      "Export": {
-        "Name": "sls-NameSorterProcessor-dev-NameSorterProcessorLambdaFunctionQualifiedArn"
       }
     },
     "ServiceEndpoint": {

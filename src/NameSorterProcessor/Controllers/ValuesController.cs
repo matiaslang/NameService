@@ -10,7 +10,7 @@ namespace NameSorterProcessor.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new[] {"value1", "value2TEST2IIING"};
+            return new[] {"value1", "values:)"};
         }
 
         // GET api/values/5

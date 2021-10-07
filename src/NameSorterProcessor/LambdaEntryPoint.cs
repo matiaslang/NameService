@@ -14,7 +14,6 @@ namespace NameSorterProcessor
     /// 
     /// NameSorterProcessor::NameSorterProcessor.LambdaEntryPoint::FunctionHandlerAsync
     /// </summary>
-    [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
     public class LambdaEntryPoint : APIGatewayProxyFunction
     {
         /// <summary>

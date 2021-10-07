@@ -1,20 +1,27 @@
-service: namesorterprocessor
-app: namesorterprocessor
+service: NameSorterProcessor
 provider: 
   name: aws
   region: eu-north-1
   runtime: dotnetcore3.1
   deploymentBucket:
     name: ${opt:region, self:provider.region}-deployments
+  versionFunctions: false
   timeout: 30
   memorySize: 256
   environment:
     DynamoDbConfiguration__TableName: ${file(env.configs.yml):dynamoTable}
-  IamRoleStatements:
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "ssm:GetParameterByPath"
+        - "ssm:GetParameters"
+      Resource:
+        - "*"
     - Effect: "Allow"
       Action:
         - dynamodb:*
-      Resource: [namesTable, Arn]
+      Resource: 
+        - "Fn::GetAtt": [namesTable, Arn]
 
 functions:
   NameSorterProcessor:
@@ -23,6 +30,13 @@ functions:
       - http:
           path: /{proxy+}
           method: any
+          
+package:
+  artifact: bin/Release/netcoreapp3.1/namesorter.zip
+  exclude:
+    - ./*.sh
+    - ./node_modules
+    - .env
 resources:
   Resources:
     namesTable:
@@ -39,7 +53,13 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
             
-package:
- excludeDevDependencies: false
+
+
+ 
 plugins:
   - serverless-deployment-bucket
+    
+  
+    
+tags:
+  origin: serverless

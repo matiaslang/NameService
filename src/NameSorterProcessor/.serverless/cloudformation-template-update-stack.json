@@ -5,7 +5,7 @@
     "NameSorterProcessorLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/NameSorterProcessor-dev-NameSorterProcessor"
+        "LogGroupName": "/aws/lambda/NameSorterProcessor-default-NameSorterProcessor"
       }
     },
     "IamRoleLambdaExecution": {
@@ -34,7 +34,7 @@
                 "-",
                 [
                   "NameSorterProcessor",
-                  "dev",
+                  "default",
                   "lambda"
                 ]
               ]
@@ -50,7 +50,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/NameSorterProcessor-dev*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/NameSorterProcessor-default*:*"
                     }
                   ]
                 },
@@ -61,7 +61,7 @@
                   ],
                   "Resource": [
                     {
-                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/NameSorterProcessor-dev*:*:*"
+                      "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/NameSorterProcessor-default*:*:*"
                     }
                   ]
                 },
@@ -99,7 +99,7 @@
             "-",
             [
               "NameSorterProcessor",
-              "dev",
+              "default",
               {
                 "Ref": "AWS::Region"
               },
@@ -114,11 +114,11 @@
       "Properties": {
         "Code": {
           "S3Bucket": "eu-north-1-deployments",
-          "S3Key": "serverless/NameSorterProcessor/dev/1633640478680-2021-10-07T21:01:18.680Z/namesorter.zip"
+          "S3Key": "serverless/NameSorterProcessor/default/1633803772358-2021-10-09T18:22:52.358Z/namesorter.zip"
         },
         "Handler": "NameSorterProcessor::NameSorterProcessor.LambdaEntryPoint::FunctionHandlerAsync",
         "Runtime": "dotnetcore3.1",
-        "FunctionName": "NameSorterProcessor-dev-NameSorterProcessor",
+        "FunctionName": "NameSorterProcessor-default-NameSorterProcessor",
         "MemorySize": 256,
         "Timeout": 30,
         "Environment": {
@@ -140,7 +140,7 @@
     "ApiGatewayRestApi": {
       "Type": "AWS::ApiGateway::RestApi",
       "Properties": {
-        "Name": "dev-NameSorterProcessor",
+        "Name": "default-NameSorterProcessor",
         "EndpointConfiguration": {
           "Types": [
             "EDGE"
@@ -210,13 +210,13 @@
         "NameSorterProcessorLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1633640476923": {
+    "ApiGatewayDeployment1633803770313": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {
           "Ref": "ApiGatewayRestApi"
         },
-        "StageName": "dev"
+        "StageName": "default"
       },
       "DependsOn": [
         "ApiGatewayMethodProxyVarAny"
@@ -286,7 +286,7 @@
     "ServerlessDeploymentBucketName": {
       "Value": "eu-north-1-deployments",
       "Export": {
-        "Name": "sls-NameSorterProcessor-dev-ServerlessDeploymentBucketName"
+        "Name": "sls-NameSorterProcessor-default-ServerlessDeploymentBucketName"
       }
     },
     "ServiceEndpoint": {
@@ -307,12 +307,12 @@
             {
               "Ref": "AWS::URLSuffix"
             },
-            "/dev"
+            "/default"
           ]
         ]
       },
       "Export": {
-        "Name": "sls-NameSorterProcessor-dev-ServiceEndpoint"
+        "Name": "sls-NameSorterProcessor-default-ServiceEndpoint"
       }
     }
   }

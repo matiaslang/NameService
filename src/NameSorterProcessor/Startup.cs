@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Amazon;
+using Amazon.Extensions.NETCore.Setup;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -27,6 +29,11 @@ namespace NameSorterProcessor
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddDefaultAWSOptions(
+                new AWSOptions
+                {
+                    Region = RegionEndpoint.GetBySystemName("eu-west-2")
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
@@ -41,7 +48,7 @@ namespace NameSorterProcessor
 
             app.UseRouting();
 
-            //app.UseAuthorization();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
@@ -52,6 +59,8 @@ namespace NameSorterProcessor
                         await context.Response.WriteAsync("Welcome to running ASP.NET Core on AWS Lambda");
                     });
             });
+            
+            
         }
     }
 }

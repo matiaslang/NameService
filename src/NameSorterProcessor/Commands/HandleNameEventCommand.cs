@@ -37,6 +37,18 @@ namespace NameSorterProcessor.Commands {
             return new EventResult{NameList = sortedList, OperationSucceeded = true};
 
         }
-        
+
+        public static async Task<EventResult> ProcessSinglePostingEvent(NameModel name) {
+            try {
+                createClient(false);
+                await CreateTableIfNotExisting();
+                var result = await Client.PutItemAsync(CreatePutItemRequest(name));
+                return new EventResult {OperationSucceeded = true};
+            }
+            catch (Exception e) {
+                LambdaLogger.Log($"Error while posting single person: {e.Message}");
+                return new EventResult {OperationSucceeded = false, Exception = e.Message};
+            }
+        }
     }
 }

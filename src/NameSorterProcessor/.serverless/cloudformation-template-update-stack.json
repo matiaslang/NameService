@@ -114,7 +114,7 @@
       "Properties": {
         "Code": {
           "S3Bucket": "eu-north-1-deployments",
-          "S3Key": "serverless/NameSorterProcessor/default/1633803772358-2021-10-09T18:22:52.358Z/namesorter.zip"
+          "S3Key": "serverless/NameSorterProcessor/default/1633975248263-2021-10-11T18:00:48.263Z/namesorter.zip"
         },
         "Handler": "NameSorterProcessor::NameSorterProcessor.LambdaEntryPoint::FunctionHandlerAsync",
         "Runtime": "dotnetcore3.1",
@@ -210,7 +210,7 @@
         "NameSorterProcessorLambdaPermissionApiGateway"
       ]
     },
-    "ApiGatewayDeployment1633803770313": {
+    "ApiGatewayDeployment1633975245646": {
       "Type": "AWS::ApiGateway::Deployment",
       "Properties": {
         "RestApiId": {

@@ -20,10 +20,6 @@ namespace NameSorterProcessor.DynamoDB {
 
         private static bool IsPortInUse() {
             var isAvailable = true;
-            // Evaluate current system TCP connections. This is the same information provided
-            // by the netstat command line application, just in .Net strongly-typed object
-            // form.  We will look through the list, and if our port we would like to use
-            // in our TcpClient is occupied, we will set isAvailable to false.
             var ipGlobalProperties = IPGlobalProperties.GetIPGlobalProperties();
             var tcpConnInfoArray = ipGlobalProperties.GetActiveTcpListeners();
             foreach (var endpoint in tcpConnInfoArray)
@@ -77,7 +73,7 @@ namespace NameSorterProcessor.DynamoDB {
             return result;
         }
         
-        public static PutItemRequest PutItems(NameModel name) {
+        public static PutItemRequest CreatePutItemRequest(NameModel name) {
             LambdaLogger.Log($"Starting to log user {name.name}");
             Dictionary<string, AttributeValue> attributes = new Dictionary<string, AttributeValue>();
             attributes["name"] = new AttributeValue {S = name.name};

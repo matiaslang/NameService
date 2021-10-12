@@ -2,6 +2,7 @@ service: NameSorterProcessor
 provider: 
   name: aws
   region: eu-north-1
+  stage: default
   runtime: dotnetcore3.1
   deploymentBucket:
     name: ${opt:region, self:provider.region}-deployments
@@ -22,7 +23,8 @@ provider:
         - dynamodb:*
       Resource: 
         - "Fn::GetAtt": [namesTable, Arn]
-
+environment:
+  SLS_DEBUG: "*"
 functions:
   NameSorterProcessor:
     handler: NameSorterProcessor::NameSorterProcessor.LambdaEntryPoint::FunctionHandlerAsync
@@ -53,12 +55,18 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
             
-
+custom:
+  customDomain:
+    domainName: nameapi.matiaslang.info
+    basePath: api
+    stage: ${self:provider.stage}
+    createRoute53Record: true
+    apiType: rest
 
  
 plugins:
   - serverless-deployment-bucket
-    
+  - serverless-domain-manager
   
     
 tags:
